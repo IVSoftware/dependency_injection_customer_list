@@ -13,6 +13,9 @@ namespace DL
         {
             InitializeComponent();
             _repo = (IRepo<Customer>)Program.ServiceProvider.GetService(typeof(IRepo<Customer>));
+
+            // Simulate a new query
+            buttonMockQuery.Click += (sender, e) => changeTheBindingListExample();
         }
         private IRepo<Customer> _repo;
 
@@ -32,6 +35,16 @@ namespace DL
             foreach (DataGridViewColumn column in dataGridViewCust.Columns)
             {
                 column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+        }
+
+        private void changeTheBindingListExample()
+        {
+            Customers.Clear();
+
+            foreach (var customer in _repo.NewQueryMock("SELECT * FROM CUSTOMERS WHERE FirstName='Other'"))
+            {
+                Customers.Add(customer);
             }
         }
     }

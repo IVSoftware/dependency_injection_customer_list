@@ -6,25 +6,25 @@ namespace DL
     public interface IRepo<T>
     {
         List<T> GetAllMock();
+        List<T> NewQueryMock(string sql);
     }
     public class CustomersRepo : IRepo<Customer>
     {
         /// <summary>
         /// Mock a recordset corresponding to 
         /// @"SELECT * FROM CUSTOMERS";
-        /// </summary>
-        public List<Customer> GetAllMock()
+        /// </summary>z
+        public List<Customer> GetAllMock() => new List<Customer>
         {
-            List<Customer> customers = new List<Customer>();
+            new Customer{ FirstName = "Tom", LastName = "Hanks"},
+            new Customer{ FirstName = "Tom", LastName = "Cruise"},
+            new Customer{ FirstName = "Tom", LastName = "Holland"},
+        };
 
-            // MOCK
-            return new List<Customer>
-            {
-                new Customer{ FirstName = "Tom", LastName = "Hanks"},
-                new Customer{ FirstName = "Tom", LastName = "Cruise"},
-                new Customer{ FirstName = "Tom", LastName = "Holland"},
-            };
-        }
+        public List<Customer> NewQueryMock(string sql) => new List<Customer>
+        {
+            new Customer{ FirstName = "Other", LastName = "Customer"},
+        };
     }
 
     public class Customer
