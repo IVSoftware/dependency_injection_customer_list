@@ -12,22 +12,22 @@ namespace DL
         public Main()
         {
             InitializeComponent();
+            _repo = (IRepo<Customer>)Program.ServiceProvider.GetService(typeof(IRepo<Customer>));
         }
+        private IRepo<Customer> _repo;
 
         /// <summary>
         /// A binding list will notify DGV when data changes
         /// </summary>
-        public BindingList<Customer> CustomersData { get; } = new BindingList<Customer>();
-
+        public BindingList<Customer> Customers { get; } = new BindingList<Customer>();
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            dataGridViewCust.DataSource = CustomersData;
+            dataGridViewCust.DataSource = Customers;
 
-            var iRepo = (IRepo<Customer>)Program.ServiceProvider.GetService(typeof(IRepo<Customer>));
-            foreach (var customer in iRepo.GetAllMock())
+            foreach (var customer in _repo.GetAllMock())
             {
-                CustomersData.Add(customer);
+                Customers.Add(customer);
             }
             foreach (DataGridViewColumn column in dataGridViewCust.Columns)
             {
